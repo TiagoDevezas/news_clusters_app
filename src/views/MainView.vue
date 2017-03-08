@@ -7,7 +7,6 @@
           <div class="column col-8 col-sm-12">        
             <div class="loading-overlay" v-if="loading">A criar página...</div>
             <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
-            <!-- <Flatpickr :options="{}" /> -->
             <item-cluster v-for="cluster in clusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
           </div>     
         </div>
