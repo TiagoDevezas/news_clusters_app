@@ -14,6 +14,9 @@
     props: {
       items: {
         type: Array
+      },
+      labels: {
+        type: Array
       }
     },
 
