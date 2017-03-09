@@ -1,7 +1,7 @@
 <template>
   <div class="column col-4 col-sm-12">
     <ul class="nav">
-      <li class="nav-item" v-for="label in labels" :class="[ activeLabel === label && labelClicked ? 'active' : '' ]">
+      <li class="nav-item" v-for="label in labels" :class="[ selectedLabel === label && labelClicked ? 'active' : '' ]">
         <a href="#" @click.prevent="filterClusters(label)">{{ label }}</a>
       </li>
     </ul>
@@ -19,15 +19,16 @@
     },
     data () {
       return {
-        activeLabel: '',
+        selectedLabel: '',
         labelClicked: false
       }
     },
     methods: {
       filterClusters (label) {
-        this.activeLabel = label
-        this.labelClicked = !this.labelClicked
-        eventBus.$emit('labelClicked', this.activeLabel)
+        this.selectedLabel = this.selectedLabel !== label ? label : ''
+        this.labelClicked = this.selectedLabel === label
+        console.log(this.selectedLabel, this.labelClicked)
+        eventBus.$emit('labelClicked', this.selectedLabel)
       }
     }
   }

@@ -42,7 +42,7 @@
 <style scoped>
   .date-picker input {
     border: 0;
-    border-bottom: 2px solid #BD4343;
+    border-bottom: 2px solid #5764c6;
     font-size: 2rem;
     color: #2c3e50;
     font-weight: 600;

@@ -18,24 +18,14 @@ export default {
   }
 
   #app {
-    /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-    /*font-family: 'Libre Franklin', sans-serif;*/
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    /*margin-top: 60px;*/
-    /*max-width: 98rem;*/
-    /*margin: 0 auto;*/
   }
 
-/*  a:link {
-    color: #272727;
-    text-decoration: none;
-    font-weight: 600;
+  a:focus {
+    box-shadow: none;
   }
-  a:hover {
-    border-bottom: 2px solid #BD4343;
-  }*/
 
   .flatpickr-calendar {
     /*font-family: 'Libre Franklin', sans-serif !important;*/

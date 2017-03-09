@@ -7,7 +7,7 @@
           <div class="column col-8 col-sm-12">        
             <div class="loading-overlay" v-if="loading">A criar página...</div>
             <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
-            <item-cluster v-for="cluster in clusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
+            <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
           </div>     
         </div>
       </div>
@@ -34,6 +34,7 @@
     data () {
       return {
         clusters: [],
+        filteredClusters: [],
         labels: [],
         loading: true
       }
@@ -41,8 +42,8 @@
 
     mounted () {
       this.fetchData()
-      eventBus.$on('labelClicked', function (label) {
-        console.log(label)
+      eventBus.$on('labelClicked', label => {
+        this.showClusterForLabel(label)
       })
     },
 
@@ -55,12 +56,12 @@
         this.loading = true
         fetchClusters(this.$route.query)
         .then((response) => {
-          // console.log(response)
-          this.loading = false
           this.clusters = response.data.clusters
+          this.filteredClusters = this.clusters
           // this.sortByDate(this.clusters)
           // this.sortByScore(this.clusters)
-          this.labels = this.filterLabels(this.clusters)
+          this.labels = this.getLabelsFromClusters(this.clusters)
+          this.loading = false
         })
         .catch((error) => {
           this.loading = false
@@ -77,10 +78,19 @@
           return Date.parse(b.latest_date) - Date.parse(a.latest_date)
         })
       },
-      filterLabels: (clusters) => {
+      getLabelsFromClusters: (clusters) => {
         return [].concat.apply([], clusters.map((cluster) => {
           return cluster.labels
         }))
+      },
+      showClusterForLabel (label) {
+        if (label.length) {
+          this.filteredClusters = this.clusters.filter((cluster) => {
+            return cluster.labels[0] === label
+          })
+        } else {
+          this.filteredClusters = this.clusters
+        }
       }
     }
 
