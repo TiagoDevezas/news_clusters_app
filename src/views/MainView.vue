@@ -68,7 +68,9 @@
         this.loading = true
         fetchClusters(this.$route.query)
         .then((response) => {
-          this.clusters = response.data.clusters
+          this.clusters = response.data.clusters.filter(function (cluster) {
+            return cluster.labels[0].split(' ').length > 1 /* Just for testing - filter out clusters whit one word labels */
+          })
           this.filteredClusters = this.clusters
           this.labels = this.getLabelsFromClusters(this.clusters)
           this.loading = false
