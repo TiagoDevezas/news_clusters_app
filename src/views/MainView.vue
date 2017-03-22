@@ -3,7 +3,7 @@
     <div class="clusters">
       <div class="container grid-980">
         <div class="columns">        
-          <label-list :labels="labels"></label-list>
+          <label-list :labels="labels" v-show="!loading"></label-list>
           <div class="column col-8 col-sm-12">        
             <div class="loading-overlay" v-show="loading">A criar página...</div>
             <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
