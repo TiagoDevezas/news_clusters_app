@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script type="text/javascript">
+<script>
   import ItemMain from './ItemMain'
   import ItemRelated from './ItemRelated'
 

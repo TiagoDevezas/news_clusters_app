@@ -5,8 +5,9 @@
         <div class="columns">        
           <label-list :labels="labels"></label-list>
           <div class="column col-8 col-sm-12">        
-            <div class="loading-overlay" v-if="loading">A criar página...</div>
+            <div class="loading-overlay" v-show="loading">A criar página...</div>
             <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
+            <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading"></dropdown-sorter>
             <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
           </div>     
         </div>
@@ -15,20 +16,22 @@
   </div>
 </template>
 
-<script type="text/javascript">
+<script>
   import fetchClusters from '../store/api.js'
   import { eventBus } from '../main.js'
 
   import ItemCluster from '../components/ItemCluster'
   import DatePicker from '../components/DatePicker'
   import LabelList from '../components/LabelList'
+  import DropdownSorter from '../components/DropdownSorter'
 
   export default {
 
     components: {
       ItemCluster,
       DatePicker,
-      LabelList
+      LabelList,
+      DropdownSorter
     },
 
     data () {
@@ -36,7 +39,13 @@
         clusters: [],
         filteredClusters: [],
         labels: [],
-        loading: true
+        loading: true,
+        dropdownLabels: [
+          { label: 'Pontuação: mais alta', sort: ['score', 'desc'] },
+          { label: 'Pontuação: mais baixa', sort: ['score', 'asc'] },
+          { label: 'Data: mais recente', sort: ['date', 'desc'] },
+          { label: 'Data: mais antiga', sort: ['date', 'asc'] }
+        ]
       }
     },
 
@@ -44,6 +53,9 @@
       this.fetchData()
       eventBus.$on('labelClicked', label => {
         this.showClusterForLabel(label)
+      })
+      eventBus.$on('sortClusters', sortParams => {
+        this.sortClusters(sortParams)
       })
     },
 
@@ -58,8 +70,6 @@
         .then((response) => {
           this.clusters = response.data.clusters
           this.filteredClusters = this.clusters
-          // this.sortByDate(this.clusters)
-          // this.sortByScore(this.clusters)
           this.labels = this.getLabelsFromClusters(this.clusters)
           this.loading = false
         })
@@ -68,14 +78,15 @@
           console.log(error)
         })
       },
-      sortByScore: (clusters) => {
-        clusters.sort((a, b) => {
-          return b.score - a.score
-        })
-      },
-      sortByDate: (clusters) => {
-        clusters.sort((a, b) => {
-          return Date.parse(b.latest_date) - Date.parse(a.latest_date)
+      sortClusters (sortParams) {
+        let dimension = sortParams[0]
+        let order = sortParams[1]
+        this.clusters.sort((a, b) => {
+          if (dimension === 'score') {
+            return order === 'asc' ? a.score - b.score : b.score - a.score
+          } else if (dimension === 'date') {
+            return order === 'asc' ? Date.parse(a.latest_date) - Date.parse(b.latest_date) : Date.parse(b.latest_date) - Date.parse(a.latest_date)
+          }
         })
       },
       getLabelsFromClusters: (clusters) => {
