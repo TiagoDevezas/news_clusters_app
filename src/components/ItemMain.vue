@@ -1,8 +1,14 @@
 <template>
   <div class="item-main">
-    <div class="item-main-source">{{ itemMainData.source_name }} - {{ formatDate }}</div>
-    <h1><a :href="itemMainData.url"><span v-html="itemMainData.title"></span></a></h1>
-    <div class="item-main-summary" v-html="truncateSummary"></div>
+    <div class="item-main-source">{{ itemMainData.source_name }} &middot; {{ formatDate }}</div>
+    <div class="item-main-wrapper">
+      <h1>
+        <a :href="itemMainData.url" @mouseover="toggleSnippet" @mouseleave="toggleSnippet">
+          <span v-html="itemMainData.title"></span>
+        </a>
+      </h1>
+      <div :class="[{visible: showSnippet}, 'item-main-summary']" v-html="truncateSummary"></div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +18,18 @@
     props: {
       itemMainData: {
         type: Object
+      }
+    },
+
+    data () {
+      return {
+        showSnippet: false
+      }
+    },
+
+    methods: {
+      toggleSnippet () {
+        this.showSnippet = !this.showSnippet
       }
     },
 
@@ -26,7 +44,9 @@
       },
 
       formatDate () {
-        return this.itemMainData.pub_date.slice(0, 10) + ' - ' + this.itemMainData.pub_date.slice(11, 16)
+        let datePart = this.itemMainData.pub_date.slice(0, 10)
+        let timePart = this.itemMainData.pub_date.slice(11, 16)
+        return datePart + ' - ' + timePart
       }
     }
   }
@@ -35,16 +55,32 @@
 
 <style scoped>
   .item-main {
-    margin-bottom: 1rem;
+    margin-bottom: .3rem;
   }
   .item-main-source {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
+  }
+  .item-main-wrapper {
+    position: relative;
+  }
+  .item-main-summary {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    z-index: 100;
+    padding: 1rem;
+    border-radius: .2rem;
+    box-shadow: 0 .1rem .4rem rgba(0,0,0,.3);
+  }
+  .visible {
+    display: block;
   }
   div {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   h1 {
-    font-size: 1.9rem !important;
-    margin: 0 0 0.5rem 0;
+    font-size: 1.6rem !important;
+    font-weight: bold;
+    margin: 0 0 0.1rem 0;
   }
 </style>

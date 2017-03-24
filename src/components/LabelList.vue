@@ -1,5 +1,5 @@
 <template>
-  <div class="column col-4 col-sm-12">
+  <div class="column col-3 col-sm-12">
     <ul class="menu">
       <li class="menu-item"><strong>Tópicos</strong></li>
       <li class="divider"></li>

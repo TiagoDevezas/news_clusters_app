@@ -2,14 +2,22 @@
   <div class="container-main">
     <div class="clusters">
       <div class="container grid-980">
-        <div class="columns">        
+        <div class="columns">   
           <label-list :labels="labels" v-show="!loading"></label-list>
-          <div class="column col-8 col-sm-12">        
+          <div class="column col-7 col-sm-12">        
             <div class="loading-overlay" v-show="loading">A criar página...</div>
             <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
             <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading"></dropdown-sorter>
             <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
-          </div>     
+          </div>
+          <div class="column col-2 col-sm-12">
+            <div class="form-group" v-for="source in sources">
+              <label class="form-switch">
+                <input type="checkbox" checked="true" />
+                <i class="form-icon"></i> {{ source }}
+              </label>
+            </div>
+          </div>    
         </div>
       </div>
     </div>
@@ -39,6 +47,7 @@
         clusters: [],
         filteredClusters: [],
         labels: [],
+        sources: [],
         loading: true,
         dropdownLabels: [
           { label: 'Pontuação: mais alta', sort: ['score', 'desc'] },
@@ -73,6 +82,7 @@
           })
           this.filteredClusters = this.clusters
           this.labels = this.getLabelsFromClusters(this.clusters)
+          this.sources = response.data.sources
           this.loading = false
         })
         .catch((error) => {

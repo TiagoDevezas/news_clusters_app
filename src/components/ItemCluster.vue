@@ -38,11 +38,11 @@
 
 <style scoped>
   .cluster {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
   .line-separator {
     height: 1px;
     background: linear-gradient(to right, #ddd, #fff);
-    margin-top: 1.25rem;
+    margin-top: 1rem;
   }
 </style>
