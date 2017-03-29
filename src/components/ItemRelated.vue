@@ -1,8 +1,8 @@
 <template>
   <div class="item-related">
     <span>Mais: </span>
-    <span class="item-related-wrapper" v-for="(item, index) in itemRelatedData">
-      <a :href="item.url" :title="item.title.trim() + ' - ' + item.pub_date" @mouseover="showSnippet(index)" @mouseleave="hideSnippet(index)">{{ item.source_name }}</a>{{ index < (itemRelatedData.length - 1) ? ', ' : '' }}
+    <span class="item-related-wrapper" v-for="(item, index) in itemRelatedData" @mouseover="showSnippet(index)" @mouseleave="hideSnippet(index)">
+      <a :href="item.url">{{ item.source_name }}</a>{{ index < (itemRelatedData.length - 1) ? ', ' : '' }}
       <span :class="[activeItemIndex === index ? 'visible': '', 'item-related-content']">
         <span class="item-related-title" v-html="item.title"></span>
         <br>
@@ -43,13 +43,14 @@
   }
   .item-related-wrapper {
     position: relative;
+    display: inline-block;
   }
   .item-related-content {
     display: none;
     position: absolute;
     background-color: #fff;
-    z-index: 100;
     padding: 1rem;
+    z-index: 1;
     left: 0;
     right: 0;
     border-radius: .5rem;

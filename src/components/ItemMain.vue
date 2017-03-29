@@ -1,14 +1,14 @@
 <template>
   <div class="item-main">
     <div class="item-main-source">{{ itemMainData.source_name }} &middot; {{ formatDate }}</div>
-    <div class="item-main-wrapper">
+    <span class="item-main-wrapper" @mouseover="displaySnippet" @mouseleave="hideSnippet">
       <h1>
-        <a :href="itemMainData.url" @mouseover="toggleSnippet" @mouseleave="toggleSnippet">
+        <a :href="itemMainData.url">
           <span v-html="itemMainData.title"></span>
         </a>
       </h1>
-      <div :class="[{visible: showSnippet}, 'item-main-summary']" v-html="truncateSummary"></div>
-    </div>
+      <span :class="[{visible: showSnippet}, 'item-main-summary']" v-html="truncateSummary"></span>
+    </span>
   </div>
 </template>
 
@@ -28,8 +28,11 @@
     },
 
     methods: {
-      toggleSnippet () {
-        this.showSnippet = !this.showSnippet
+      displaySnippet () {
+        this.showSnippet = true
+      },
+      hideSnippet () {
+        this.showSnippet = false
       }
     },
 
@@ -62,12 +65,15 @@
   }
   .item-main-wrapper {
     position: relative;
+    display: inline-block;
+  }
+  .item-main-wrapper:hover {
+    z-index: 100;
   }
   .item-main-summary {
     display: none;
     position: absolute;
     background-color: #fff;
-    z-index: 100;
     padding: 1rem;
     border-radius: .2rem;
     box-shadow: 0 .1rem .4rem rgba(0,0,0,.3);
