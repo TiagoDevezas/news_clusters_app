@@ -1,7 +1,7 @@
 <template>
   <div :class="[{ active: open }, 'dropdown']">
     <a class="btn btn-primary" @click.prevent="toggleDropdown">
-      {{ selectedLabel }} <i class="icon-caret"></i>
+      {{ selectedLabel }} <i class="icon icon-caret"></i>
     </a>
     <ul :class="[{ hide: !open }, 'menu']">
       <li class="menu-item" v-for="itemLabel in itemLabels">

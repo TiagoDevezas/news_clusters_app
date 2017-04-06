@@ -2,7 +2,7 @@
   <div class="item-related">
     <span>Mais: </span>
     <span class="item-related-wrapper" v-for="(item, index) in itemRelatedData" @mouseover="showSnippet(index)" @mouseleave="hideSnippet(index)">
-      <a :href="item.url">{{ item.source_name }}</a>{{ index < (itemRelatedData.length - 1) ? ', ' : '' }}
+      <a :href="item.url">{{ item.source_name }}</a>{{ index < (itemRelatedData.length - 1) ? ',&nbsp;' : '' }}
       <span :class="[activeItemIndex === index ? 'visible': '', 'item-related-content']">
         <span class="item-related-title" v-html="item.title"></span>
         <br>

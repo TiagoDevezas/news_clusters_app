@@ -3,7 +3,7 @@
     <ul class="menu">
       <li class="menu-item"><strong>Tópicos</strong></li>
       <li class="divider"></li>
-      <li class="menu-item" v-for="label in labels" >
+      <li class="menu-item" v-for="label in labels">
         <a href="#" @click.prevent="filterClusters(label)" :class="[ selectedLabel === label && labelClicked ? 'active' : '' ]">{{ label }}</a>
       </li>
     </ul>

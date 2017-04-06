@@ -4,20 +4,20 @@
       <div class="container grid-980">
         <div class="columns">   
           <label-list :labels="labels" v-show="!loading"></label-list>
-          <div class="column col-7 col-sm-12">        
-            <div class="loading-overlay" v-show="loading">A criar página...</div>
-            <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
-            <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading"></dropdown-sorter>
-            <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
-          </div>
-          <div class="column col-2 col-sm-12">
-            <div class="form-group" v-for="source in sources">
-              <label class="form-switch">
-                <input type="checkbox" checked="true" />
-                <i class="form-icon"></i> {{ source }}
-              </label>
-            </div>
-          </div>    
+          <div class="column col-7 col-sm-12">
+            <tabs-container>
+              <tab-item tab-label="Notícias" href="#">
+                <div class="loading-overlay" v-show="loading">A criar página...</div>
+                <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
+                <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading"></dropdown-sorter>
+                <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
+              </tab-item>
+              <tab-item tab-label="Definições" href="#">
+                <edit-settings :source-list="sources"></edit-settings>
+                <!-- <dropdown-slider :label="'Fontes'" :source-list="sources"></dropdown-slider> -->
+              </tab-item>
+            </tabs-container>       
+          </div> 
         </div>
       </div>
     </div>
@@ -32,6 +32,10 @@
   import DatePicker from '../components/DatePicker'
   import LabelList from '../components/LabelList'
   import DropdownSorter from '../components/DropdownSorter'
+  import DropdownSlider from '../components/DropdownSlider'
+  import TabsContainer from '../components/TabsContainer'
+  import TabItem from '../components/TabItem'
+  import EditSettings from '../components/EditSettings'
 
   export default {
 
@@ -39,7 +43,11 @@
       ItemCluster,
       DatePicker,
       LabelList,
-      DropdownSorter
+      DropdownSorter,
+      DropdownSlider,
+      TabsContainer,
+      TabItem,
+      EditSettings
     },
 
     data () {
