@@ -8,7 +8,10 @@ import 'vue-flatpickr/theme/airbnb.css'
 import 'spectre.css/dist/spectre.min.css'
 import 'spectre.css/dist/spectre-icons.min.css'
 
+import store from 'store'
+
 export const eventBus = new Vue()
+export const localStore = store
 
 Vue.use(VueFlatpickr)
 

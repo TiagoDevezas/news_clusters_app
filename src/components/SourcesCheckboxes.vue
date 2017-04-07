@@ -1,14 +1,14 @@
 <template>
   <div class="container">
+    {{ sourceList }}
     <div class="columns">
       <div class="form-group col-6" v-for="source in sourceList">
         <label class="form-switch">
-          <input type="checkbox" :value="source" v-model="checkedSources" />
-          <i class="form-icon"></i> {{ source }}
+          <input type="checkbox" :value="source.name" :checked="source.selected" @click="checkSource(source)" />
+          <i class="form-icon"></i> {{ source.name }}
         </label>
       </div>
     </div>
-    {{ checkedSources }}
   </div>
 </template>
 
@@ -23,22 +23,20 @@
     },
     data () {
       return {
+        storedSources: [],
         checkedSources: []
       }
     },
     updated () {
-      if (!this.checkedSources.length) {
-        this.checkedSources = this.sourceList
-      }
-      eventBus.$emit('sourcesUpdated', this.checkedSources)
+      eventBus.$emit('sourcesUpdated', { checked: this.checkedSources, stored: this.sourceList })
       return
     },
     watch: {
-      '$route.query': 'resetCheckedSources'
+      // '$route.query': 'resetCheckedSources'
     },
     methods: {
-      resetCheckedSources () {
-        this.checkedSources = []
+      checkSource (sourceObj) {
+        console.log(sourceObj)
       }
     }
   }

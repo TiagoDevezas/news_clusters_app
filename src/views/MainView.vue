@@ -26,7 +26,8 @@
 
 <script>
   import fetchClusters from '../store/api.js'
-  import { eventBus } from '../main.js'
+  import getSourcesByType from '../store/sources.js'
+  import { eventBus, localStore } from '../main.js'
 
   import ItemCluster from '../components/ItemCluster'
   import DatePicker from '../components/DatePicker'
@@ -90,7 +91,12 @@
           })
           this.filteredClusters = this.clusters
           this.labels = this.getLabelsFromClusters(this.clusters)
-          this.sources = response.data.sources
+          // this.sources = response.data.sources
+          if (localStore.get('settings').sources !== undefined) {
+            this.sources = localStore.get('settings').sources
+          } else {
+            this.sources = this.getSourcesNames('national')
+          }
           this.loading = false
         })
         .catch((error) => {
@@ -122,6 +128,11 @@
         } else {
           this.filteredClusters = this.clusters
         }
+      },
+      getSourcesNames (sourceType) {
+        return getSourcesByType(sourceType).map((s) => {
+          return { name: s.name, selected: true }
+        })
       }
     }
 

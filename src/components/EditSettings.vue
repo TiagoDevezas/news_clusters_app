@@ -1,6 +1,5 @@
 <template>
   <div id="edit-settings" class="container">
-    {{ settings.sourcesToShow }}
     <div class="columns">
       <div class="side-nav column col-3">
         <ul class="nav">
@@ -8,7 +7,7 @@
             <a href="#" @click.prevent="setCurrentView('sources')">Fontes</a>
           </li>
           <li class="nav-item">
-            <a href="#" @click.prevent="setCurrentView('other')">Other stuff</a>
+            <!-- <a href="#" @click.prevent="setCurrentView('other')">Other stuff</a> -->
           </li>
         </ul>
       </div>
@@ -19,7 +18,7 @@
     <div class="settings-submit">
       <div>
         <button class="btn btn-primary" @click="updateSettings">Guardar</button>
-        <button class="btn btn-link">Cancelar</button>
+        <button class="btn btn-link" @click="cancelSettings">Cancelar</button>
       </div>
     </div>
   </div>
@@ -27,7 +26,6 @@
 
 <script>
   import { eventBus } from '../main.js'
-
   import SourcesCheckboxes from './SourcesCheckboxes'
 
   export default {
@@ -43,7 +41,10 @@
       return {
         currentView: 'sources',
         settings: {
-          sourcesToShow: []
+          sourcesToShow: {
+            checked: [],
+            stored: []
+          }
         }
       }
     },
@@ -53,13 +54,21 @@
       },
       updateSettings () {
         // let sourcesString = this.settings.sourcesToShow.toString()
-        let currentQuery = this.$route.query
-        this.$router.push({ query: currentQuery })
+        // let currentQuery = this.$route.query
+        // this.$router.push({ query: currentQuery })
+        // localStore.set('settings', { sources: this.settings.sourcesToShow })
+        eventBus.$emit('settingsChanged', 0, this.settings.sourcesToShow.checked)
+      },
+      cancelSettings () {
+        eventBus.$emit('settingsCanceled', 0, this.settings.sourcesToShow.stored)
       }
     },
     mounted () {
-      eventBus.$on('sourcesUpdated', sourcesArray => {
-        this.settings.sourcesToShow = sourcesArray
+      eventBus.$on('sourcesUpdated', (sources) => {
+        this.settings.sourcesToShow.checked = sources.checked
+        this.settings.sourcesToShow.stored = sources.stored
+        // console.log(JSON.stringify(this.settings.sourcesToShow.checked))
+        // console.log(JSON.stringify(this.settings.sourcesToShow.stored))
       })
     }
   }
