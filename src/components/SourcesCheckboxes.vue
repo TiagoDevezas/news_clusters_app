@@ -4,7 +4,7 @@
     <div class="columns">
       <div class="form-group col-6" v-for="source in sourceList">
         <label class="form-switch">
-          <input type="checkbox" :value="source.name" :checked="source.selected" @click="checkSource(source)" />
+          <input type="checkbox" :value="source.name" :checked="source.selected" @click="source.selected = !source.selected" />
           <i class="form-icon"></i> {{ source.name }}
         </label>
       </div>
@@ -28,11 +28,14 @@
       }
     },
     updated () {
-      eventBus.$emit('sourcesUpdated', { checked: this.checkedSources, stored: this.sourceList })
+      eventBus.$emit('sourcesUpdated', { checked: this.checkedSources, stored: this.storedSources })
       return
     },
     watch: {
       // '$route.query': 'resetCheckedSources'
+      'sourceList': function () {
+        this.storedSources = this.sourceList.slice(0)
+      }
     },
     methods: {
       checkSource (sourceObj) {
