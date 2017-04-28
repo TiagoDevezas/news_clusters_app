@@ -11,11 +11,16 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "spectre.css": "^0.2.6",
+    "babel-eslint": "^7.2.3",
+    "spectre.css": "^0.2.14",
     "store": "^2.0.4",
-    "vue": "^2.1.10",
+    "vue": "^2.3.0",
     "vue-flatpickr": "^2.3.0",
-    "vue-router": "^2.2.0"
+    "vue-router": "^2.5.2",
+    "vue-template-compiler": "^2.3.0",
+    "webpack": "^2.4.1",
+    "webpack-bundle-analyzer": "^2.4.0",
+    "webpack-dev-middleware": "^1.10.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
