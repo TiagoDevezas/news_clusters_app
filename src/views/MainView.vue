@@ -92,7 +92,7 @@
           this.filteredClusters = this.clusters
           this.labels = this.getLabelsFromClusters(this.clusters)
           // this.sources = response.data.sources
-          if (localStore.get('settings').sources !== undefined) {
+          if (localStore.get('settings') && localStore.get('settings').sources) {
             this.sources = localStore.get('settings').sources
           } else {
             this.sources = this.getSourcesNames('national')
