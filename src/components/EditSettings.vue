@@ -7,7 +7,7 @@
             <a href="#" @click.prevent="setCurrentView('sources')">Fontes</a>
           </li>
           <li class="nav-item">
-            <!-- <a href="#" @click.prevent="setCurrentView('other')">Other stuff</a> -->
+            <a href="#" @click.prevent="setCurrentView('other')">Other stuff</a>
           </li>
         </ul>
       </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import { eventBus } from '../main.js'
+  import { eventBus, localStore } from '../main.js'
   import SourcesCheckboxes from './SourcesCheckboxes'
 
   export default {
@@ -56,8 +56,9 @@
         // let sourcesString = this.settings.sourcesToShow.toString()
         // let currentQuery = this.$route.query
         // this.$router.push({ query: currentQuery })
-        // localStore.set('settings', { sources: this.settings.sourcesToShow })
+        localStore.set('settings', { sources: this.settings.sourcesToShow.stored })
         eventBus.$emit('settingsChanged', 0, this.settings.sourcesToShow.checked)
+        eventBus.$emit('fetchNewData')
       },
       cancelSettings () {
         eventBus.$emit('settingsCanceled', 0, this.settings.sourcesToShow.stored)

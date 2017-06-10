@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    {{ sourceList }}
     <div class="columns">
       <div class="form-group col-6" v-for="source in sourceList">
         <label class="form-switch">
@@ -29,17 +28,11 @@
     },
     updated () {
       eventBus.$emit('sourcesUpdated', { checked: this.checkedSources, stored: this.storedSources })
-      return
     },
     watch: {
       // '$route.query': 'resetCheckedSources'
       'sourceList': function () {
         this.storedSources = this.sourceList.slice(0)
-      }
-    },
-    methods: {
-      checkSource (sourceObj) {
-        console.log(sourceObj)
       }
     }
   }

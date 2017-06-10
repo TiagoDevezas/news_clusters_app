@@ -2,13 +2,13 @@
   <div class="container-main">
     <div class="clusters">
       <div class="container grid-980">
+        <div class="loading-overlay" v-show="loading">A criar página...</div>
         <div class="columns">   
           <label-list :labels="labels" v-show="!loading"></label-list>
           <div class="column col-7 col-sm-12">
-            <tabs-container>
+            <tabs-container v-show="!loading">
               <tab-item tab-label="Notícias" href="#">
-                <div class="loading-overlay" v-show="loading">A criar página...</div>
-                <h1 v-if="!loading">As principais notícias de <date-picker></date-picker></h1>
+                <h1>As principais notícias de <date-picker></date-picker></h1>
                 <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading"></dropdown-sorter>
                 <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
               </tab-item>
@@ -75,6 +75,9 @@
       eventBus.$on('sortClusters', sortParams => {
         this.sortClusters(sortParams)
       })
+      eventBus.$on('fetchNewData', () => {
+        this.fetchData()
+      })
     },
 
     watch: {
@@ -84,7 +87,26 @@
     methods: {
       fetchData () {
         this.loading = true
-        fetchClusters(this.$route.query)
+        if (localStore.get('settings') && localStore.get('settings').sources) {
+          this.sources = localStore.get('settings').sources
+        } else {
+          this.sources = this.getSourcesNames('national')
+        }
+        let queryParams = this.$route.query
+        let sourcesToShow = this.sources.filter((source) => {
+          return source.selected
+        }).map((source) => {
+          return source.name
+        })
+        let sourcesToHide = this.sources.filter((source) => {
+          return !source.selected
+        }).map((source) => {
+          return source.name
+        })
+        let sourcesToFetch = { sourcesToShow: sourcesToShow, sourcesToHide: sourcesToHide }
+        let mergedParams = Object.assign(queryParams, sourcesToFetch)
+        console.log(mergedParams)
+        fetchClusters(mergedParams)
         .then((response) => {
           this.clusters = response.data.clusters.filter(function (cluster) {
             return cluster.labels[0].split(' ').length > 1 /* Just for testing - filter out clusters whit one word labels */
@@ -92,11 +114,6 @@
           this.filteredClusters = this.clusters
           this.labels = this.getLabelsFromClusters(this.clusters)
           // this.sources = response.data.sources
-          if (localStore.get('settings') && localStore.get('settings').sources) {
-            this.sources = localStore.get('settings').sources
-          } else {
-            this.sources = this.getSourcesNames('national')
-          }
           this.loading = false
         })
         .catch((error) => {
