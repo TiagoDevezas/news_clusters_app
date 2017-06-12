@@ -30,4 +30,7 @@ export default {
   .flatpickr-calendar {
     /*font-family: 'Libre Franklin', sans-serif !important;*/
   }
+  .popover-container { /* Override Spectre CSS default popover with */
+    width: 45rem !important;
+  }
 </style>

@@ -3,16 +3,17 @@
     <div class="columns">
       <div class="side-nav column col-3">
         <ul class="nav">
-          <li class="nav-item active">
-            <a href="#" @click.prevent="setCurrentView('sources')">Fontes</a>
+          <li class="nav-item" :class="{ active: currentView === 'sources'}">
+            <a href="#" @click.prevent="currentView='sources'">Fontes</a>
           </li>
-          <li class="nav-item">
-            <a href="#" @click.prevent="setCurrentView('other')">Other stuff</a>
+          <li class="nav-item" :class="{ active: currentView === 'algorithm'}">
+            <a href="#" @click.prevent="currentView='algorithm'">Algoritmo</a>
           </li>
         </ul>
       </div>
       <div class="settings-content column col-9">
-        <sources-checkboxes :is="currentView" :source-list="sourceList"></sources-checkboxes>
+        <sources-checkboxes v-show="currentView === 'sources'" :source-list="sourceList"></sources-checkboxes>
+        <algorithm-params v-show="currentView === 'algorithm'" :params="algorithmParams"></algorithm-params>
       </div>
     </div>
     <div class="settings-submit">
@@ -27,25 +28,31 @@
 <script>
   import { eventBus, localStore } from '../main.js'
   import SourcesCheckboxes from './SourcesCheckboxes'
+  import AlgorithmParams from './AlgorithmParams'
 
   export default {
     props: {
       sourceList: {
         type: Array
+      },
+      algorithmParams: {
+        type: Array
       }
     },
     components: {
-      sources: SourcesCheckboxes
+      SourcesCheckboxes,
+      AlgorithmParams
     },
     data () {
       return {
         currentView: 'sources',
-        settings: {
-          sourcesToShow: {
-            checked: [],
-            stored: []
-          }
-        }
+        sourcesSet: []
+        // settings: {
+        //   sourcesToShow: {
+        //     checked: [],
+        //     stored: []
+        //   }
+        // }
       }
     },
     methods: {
@@ -53,29 +60,28 @@
         this.currentView = viewName
       },
       updateSettings () {
-        // let sourcesString = this.settings.sourcesToShow.toString()
-        // let currentQuery = this.$route.query
-        // this.$router.push({ query: currentQuery })
-        localStore.set('settings', { sources: this.settings.sourcesToShow.stored })
-        eventBus.$emit('settingsChanged', 0, this.settings.sourcesToShow.checked)
+        localStore.set('sources', { sources: this.sourcesSet })
+        localStore.set('params', { lingoParams: this.algorithmParams })
+        eventBus.$emit('settingsChanged', 0)
         eventBus.$emit('fetchNewData')
       },
       cancelSettings () {
-        eventBus.$emit('settingsCanceled', 0, this.settings.sourcesToShow.stored)
+        eventBus.$emit('settingsCanceled', 0)
+        eventBus.$emit('fetchNewData')
       }
     },
     mounted () {
       eventBus.$on('sourcesUpdated', (sources) => {
-        this.settings.sourcesToShow.checked = sources.checked
-        this.settings.sourcesToShow.stored = sources.stored
-        // console.log(JSON.stringify(this.settings.sourcesToShow.checked))
-        // console.log(JSON.stringify(this.settings.sourcesToShow.stored))
+        this.sourcesSet = sources
       })
     }
   }
 </script>
 
 <style scoped>
+  .settings-content {
+    padding-top: 2.2rem;
+  }
   .settings-submit {
     display: flex;
     justify-content: flex-end;

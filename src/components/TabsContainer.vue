@@ -26,12 +26,13 @@
         this.tabs[i].setIndex(i)
       }
       this.setActive(this.activeIndex)
-      eventBus.$on('settingsChanged', (tabIndex, sources) => {
-        // localStore.set('settings', { sources: sources })
+      eventBus.$on('settingsChanged', (tabIndex) => {
         this.clickOnTab(tabIndex)
       })
-      eventBus.$on('settingsCanceled', (tabIndex, sources) => {
-        // localStore.set('settings', { sources: sources })
+      eventBus.$on('settingsCanceled', (tabIndex) => {
+        this.clickOnTab(tabIndex)
+      })
+      eventBus.$on('showInfo', (tabIndex) => {
         this.clickOnTab(tabIndex)
       })
     },

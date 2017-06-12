@@ -1,14 +1,20 @@
 <template>
   <div class="item-main">
     <div class="item-main-source">{{ itemMainData.source_name }} &middot; {{ formatDate }}</div>
-    <span class="item-main-wrapper" @mouseover="displaySnippet" @mouseleave="hideSnippet">
+    <div class="popover">
       <h1>
         <a :href="itemMainData.url">
           <span v-html="itemMainData.title"></span>
         </a>
       </h1>
-      <span :class="[{visible: showSnippet}, 'item-main-summary']" v-html="truncateSummary"></span>
-    </span>
+      <div class="popover-container">
+        <div class="card">
+          <div class="card-body">
+            <span v-html="truncateSummary"></span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,24 +68,6 @@
   }
   .item-main-source {
     font-size: 1.25rem;
-  }
-  .item-main-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-  .item-main-wrapper:hover {
-    z-index: 100;
-  }
-  .item-main-summary {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: .2rem;
-    box-shadow: 0 .1rem .4rem rgba(0,0,0,.3);
-  }
-  .visible {
-    display: block;
   }
   div {
     font-size: 1.4rem;

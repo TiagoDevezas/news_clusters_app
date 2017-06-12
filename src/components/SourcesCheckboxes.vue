@@ -20,20 +20,8 @@
         type: Array
       }
     },
-    data () {
-      return {
-        storedSources: [],
-        checkedSources: []
-      }
-    },
     updated () {
-      eventBus.$emit('sourcesUpdated', { checked: this.checkedSources, stored: this.storedSources })
-    },
-    watch: {
-      // '$route.query': 'resetCheckedSources'
-      'sourceList': function () {
-        this.storedSources = this.sourceList.slice(0)
-      }
+      eventBus.$emit('sourcesUpdated', this.sourceList)
     }
   }
 </script>

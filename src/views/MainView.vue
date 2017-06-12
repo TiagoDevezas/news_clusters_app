@@ -8,13 +8,16 @@
           <div class="column col-7 col-sm-12">
             <tabs-container v-show="!loading">
               <tab-item tab-label="Notícias" href="#">
-                <h1>As principais notícias de <date-picker></date-picker></h1>
+                <h1>As principais notícias de <date-picker></date-picker> *</h1>
+                <p class="indication-algorithm">* segundo um <a href="#" @click.prevent="showInfo"><strong>algoritmo</strong></a></p>
                 <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading"></dropdown-sorter>
                 <item-cluster v-for="cluster in filteredClusters" :items="cluster.items" :labels="cluster.labels" v-show="!loading"></item-cluster>
               </tab-item>
               <tab-item tab-label="Definições" href="#">
-                <edit-settings :source-list="sources"></edit-settings>
-                <!-- <dropdown-slider :label="'Fontes'" :source-list="sources"></dropdown-slider> -->
+                <edit-settings :source-list="sources" :algorithm-params="algorithmParams"></edit-settings>
+              </tab-item>
+              <tab-item tab-label="Informação" href="#">
+                <p>bla</p>
               </tab-item>
             </tabs-container>       
           </div> 
@@ -27,7 +30,8 @@
 <script>
   import fetchClusters from '../store/api.js'
   import getSourcesByType from '../store/sources.js'
-  import { eventBus, localStore } from '../main.js'
+  import getAlgorithParams from '../store/algorithmParams.js'
+  import { eventBus } from '../main.js'
 
   import ItemCluster from '../components/ItemCluster'
   import DatePicker from '../components/DatePicker'
@@ -57,6 +61,7 @@
         filteredClusters: [],
         labels: [],
         sources: [],
+        algorithmParams: [],
         loading: true,
         dropdownLabels: [
           { label: 'Pontuação: mais alta', sort: ['score', 'desc'] },
@@ -87,12 +92,11 @@
     methods: {
       fetchData () {
         this.loading = true
-        if (localStore.get('settings') && localStore.get('settings').sources) {
-          this.sources = localStore.get('settings').sources
-        } else {
-          this.sources = this.getSourcesNames('national')
-        }
+        this.sources = getSourcesByType('national')
+        this.algorithmParams = getAlgorithParams('lingo')
         let queryParams = this.$route.query
+        /* Extract to function */
+        let algoParams = { lingo: this.algorithmParams }
         let sourcesToShow = this.sources.filter((source) => {
           return source.selected
         }).map((source) => {
@@ -104,8 +108,8 @@
           return source.name
         })
         let sourcesToFetch = { sourcesToShow: sourcesToShow, sourcesToHide: sourcesToHide }
-        let mergedParams = Object.assign(queryParams, sourcesToFetch)
-        console.log(mergedParams)
+        let mergedParams = Object.assign(queryParams, sourcesToFetch, algoParams)
+        /* */
         fetchClusters(mergedParams)
         .then((response) => {
           this.clusters = response.data.clusters.filter(function (cluster) {
@@ -113,13 +117,15 @@
           })
           this.filteredClusters = this.clusters
           this.labels = this.getLabelsFromClusters(this.clusters)
-          // this.sources = response.data.sources
           this.loading = false
         })
         .catch((error) => {
           this.loading = false
           console.log(error)
         })
+      },
+      showInfo () {
+        eventBus.$emit('showInfo', 2)
       },
       sortClusters (sortParams) {
         let dimension = sortParams[0]
@@ -145,11 +151,6 @@
         } else {
           this.filteredClusters = this.clusters
         }
-      },
-      getSourcesNames (sourceType) {
-        return getSourcesByType(sourceType).map((s) => {
-          return { name: s.name, selected: true }
-        })
       }
     }
 
@@ -163,8 +164,13 @@
   }
   h1 {
     font-size: 2.2rem;
+    margin-bottom: 0;
   }
   .grid-980 {
     max-width: 98rem;
+  }
+  p.indication-algorithm {
+    margin: 0 0 0.5rem 0;
+    padding: 0;
   }
 </style>
