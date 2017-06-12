@@ -37,7 +37,7 @@ const params = {
     // },
     {
       id: 'maxWordDf',
-      label: 'Freqª máxima palavra por documento',
+      label: 'Frequência máxima das palavras nos documentos',
       description: 'Palavras que apareçam em mais do que o valor percentual deste atributo serão ignoradas. Um valor de 1.0 significa que todas as palavras serão levadas em conta, independentemente do número de documentos em que apareçam.',
       defaultValue: 0.01,
       storedValue: 0.01,
@@ -48,7 +48,7 @@ const params = {
     },
     {
       id: 'PhraseExtractor.dfThreshold',
-      label: 'Frequência limite das frases por documento',
+      label: 'Frequência limite das frases nos documentos',
       description: 'Frases que apareçam em menos documentos do que o valor deste atributo serão ignoradas.',
       defaultValue: 1,
       storedValue: 1,
@@ -59,7 +59,7 @@ const params = {
     },
     {
       id: 'CaseNormalizer.dfThreshold',
-      label: 'Frequência limite das palavras por documento',
+      label: 'Frequência limite das palavras nos documentos',
       description: 'Palavras que apareçam em menos documentos do que o valor deste atributo serão ignoradas.',
       defaultValue: 1,
       storedValue: 1,

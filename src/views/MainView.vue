@@ -17,7 +17,7 @@
                 <edit-settings :source-list="sources" :algorithm-params="algorithmParams"></edit-settings>
               </tab-item>
               <tab-item tab-label="Informação" href="#">
-                <p>bla</p>
+                <algorithm-information></algorithm-information>
               </tab-item>
             </tabs-container>       
           </div> 
@@ -41,6 +41,7 @@
   import TabsContainer from '../components/TabsContainer'
   import TabItem from '../components/TabItem'
   import EditSettings from '../components/EditSettings'
+  import AlgorithmInformation from '../components/AlgorithmInformation'
 
   export default {
 
@@ -52,7 +53,8 @@
       DropdownSlider,
       TabsContainer,
       TabItem,
-      EditSettings
+      EditSettings,
+      AlgorithmInformation
     },
 
     data () {
