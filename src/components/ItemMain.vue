@@ -3,7 +3,7 @@
     <div class="item-main-source">{{ itemMainData.source_name }} &middot; {{ formatDate }}</div>
     <div class="popover">
       <h1>
-        <a :href="itemMainData.url">
+        <a :href="itemMainData.url" :title="itemMainData.title">
           <span v-html="itemMainData.title"></span>
         </a>
       </h1>
