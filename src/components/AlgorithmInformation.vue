@@ -13,7 +13,7 @@
 
     <p>Após o pré-processamento, são extraídas as frases mais frequentes do texto. Estas frases são usadas para determinar as <i>labels</i> (os "Tópicos" que aparecem na barra lateral da aplicação) dos grupos de notícias (<i>clusters</i>).</p>
 
-    <h5>Descoberto do conteúdo dos <i>clusters</i></h5>
+    <h5>Descoberta do conteúdo dos <i>clusters</i></h5>
 
     <p>Com base na proximidade entre as <i>labels</i> identificadas e o texto dos documentos, o algoritmo determina quais os documentos a associar a cada <i>label</i>. Os documentos aos quais não é possível atribuir uma <i>label</i> não são incluídos nos <i>clusters</i>.
 

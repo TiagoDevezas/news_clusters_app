@@ -1,6 +1,6 @@
 <template>
   <div class="column col-3 col-sm-12">
-    <ul class="menu">
+    <ul class="menu" v-if="labels.length">
       <li class="menu-item"><strong>Tópicos</strong></li>
       <li class="divider"></li>
       <li class="menu-item" v-for="label in labels">
@@ -29,7 +29,8 @@
       filterClusters (label) {
         this.selectedLabel = this.selectedLabel !== label ? label : ''
         this.labelClicked = this.selectedLabel === label
-        eventBus.$emit('labelClicked', this.selectedLabel)
+        eventBus.$emit('labelClicked', label, this.labelClicked)
+        // eventBus.$emit('labelClicked', this.selectedLabel)
       }
     }
   }

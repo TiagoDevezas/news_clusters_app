@@ -46,6 +46,6 @@
 
 <style scoped>
   .item-related {
-    font-size: 1.25rem;
+    font-size: 0.625rem;
   }
 </style>

@@ -15,6 +15,7 @@ export default {
 
   body {
     margin-top: 30px !important;
+    /*font-family: sans-serif !important;*/
   }
 
   #app {
@@ -24,7 +25,7 @@ export default {
   }
 
   a:focus {
-    box-shadow: none;
+    box-shadow: none !important;
   }
 
   .flatpickr-calendar {

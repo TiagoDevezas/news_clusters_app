@@ -4,10 +4,10 @@ import router from './router'
 
 import VueFlatpickr from 'vue-flatpickr'
 
-import 'vue-flatpickr/theme/airbnb.css'
 import 'spectre.css/dist/spectre.min.css'
 import 'spectre.css/dist/spectre-exp.min.css'
 import 'spectre.css/dist/spectre-icons.min.css'
+import 'vue-flatpickr/theme/airbnb.css'
 
 import store from 'store'
 

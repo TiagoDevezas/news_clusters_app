@@ -51,7 +51,7 @@
 
 <style scoped>
   .dropdown {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
   }
   .hide {
     display: none;

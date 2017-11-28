@@ -2,7 +2,11 @@
   <div class="container">
     <div class="columns">
       <div class="col-8">
-        <div class="form-group" v-for="p in params">
+        <label class="form-switch">
+          <input type="checkbox" v-model="algorithmIsOn" />
+          <i class="form-icon"></i> {{ switchLabel }}
+        </label>
+        <div class="form-group" v-for="p in params" v-show="algorithmIsOn">
           <div class="icon-label">          
             <div class="popover popover-top">          
               <img class="info-icon" :src="infoIcon" alt="">
@@ -24,7 +28,7 @@
 </template>
 
 <script>
-  import { eventBus } from '../main.js'
+  import { localStore, eventBus } from '../main.js'
   import infoIcon from '../assets/info.svg'
 
   export default {
@@ -33,13 +37,38 @@
         type: Array
       }
     },
+
     data () {
       return {
-        infoIcon
+        infoIcon,
+        algorithmIsOn: true,
+        switchLabel: 'Ligado'
       }
     },
-    updated () {
-      eventBus.$emit('algoParamsUpdated', this.params)
+
+    watch: {
+      'algorithmIsOn': 'switchAlgorithm'
+    },
+
+    mounted () {
+      if (localStore.get('algoFilter') !== undefined) {
+        this.algorithmIsOn = localStore.get('algoFilter').isOn
+      }
+    },
+
+    methods: {
+      switchAlgorithm (val) {
+        eventBus.$emit('algorithmSwitched', val)
+        if (!val) {
+          this.switchLabel = 'Desligado'
+          this.algorithmIsOn = false
+          // eventBus.$emit('algorithmIsOff')
+        } else {
+          this.switchLabel = 'Ligado'
+          this.algorithmIsOn = true
+          // eventBus.$emit('algorithmIsOn')
+        }
+      }
     }
   }
 </script>
@@ -47,8 +76,8 @@
 <style scoped>
   .info-icon {
     /*display: inline-block;*/
-    width: 1.8rem;
-    margin-right: 1rem;
+    width: 0.9rem;
+    margin-right: 0.5rem;
     cursor: pointer;
   }
   .popover {
@@ -58,5 +87,8 @@
   .icon-label {
     display: flex;
     align-items: center;
+  }
+  .form-switch {
+    margin-bottom: 1.5rem;
   }
 </style>

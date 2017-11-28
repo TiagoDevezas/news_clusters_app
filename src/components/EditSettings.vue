@@ -46,7 +46,8 @@
     data () {
       return {
         currentView: 'sources',
-        sourcesSet: []
+        sourcesSet: [],
+        algorithmIsOn: true
         // settings: {
         //   sourcesToShow: {
         //     checked: [],
@@ -60,6 +61,7 @@
         this.currentView = viewName
       },
       updateSettings () {
+        localStore.set('algoFilter', { isOn: this.algorithmIsOn })
         localStore.set('sources', { sources: this.sourcesSet })
         localStore.set('params', { lingoParams: this.algorithmParams })
         eventBus.$emit('settingsChanged', 0)
@@ -74,13 +76,16 @@
       eventBus.$on('sourcesUpdated', (sources) => {
         this.sourcesSet = sources
       })
+      eventBus.$on('algorithmSwitched', (val) => {
+        this.algorithmIsOn = val
+      })
     }
   }
 </script>
 
 <style scoped>
   .settings-content {
-    padding-top: 2.2rem;
+    padding-top: 1.1rem;
   }
   .settings-submit {
     display: flex;
