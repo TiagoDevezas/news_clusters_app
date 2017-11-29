@@ -13,7 +13,6 @@
                   <span v-if="algorithmFiltering">*</span>
                 </h6>
                 <p class="indication-algorithm" v-if="algorithmFiltering">* segundo um <a href="#" @click.prevent="showInfo"><strong>algoritmo</strong></a></p>
-                <!-- <search-form v-if="algorithmFiltering"></search-form> -->
                 <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading" v-if="algorithmFiltering"></dropdown-sorter>
                 <item-cluster v-for="(cluster, index) in filteredClusters" :items="cluster.items" :cluster-label="labels[index]" v-show="!loading" v-if="algorithmFiltering"></item-cluster>
                 <div v-if="!clustersExist && algorithmFiltering">
@@ -23,8 +22,6 @@
                   <search-form></search-form>
                   <div class="results-counter">{{ resultsFound }}
                     <a href="" @click.prevent="getFeed()">Atom</a>
-                    <!-- <router-link :to="{ name: 'AtomView', query: { day: this.$route.query.day, q: this.$route.query } }">Atom</router-link> -->
-                    <!-- <a href="#" @click.prevent="getAtomXML()">Atom</a> -->
                   </div>
                   <item-main v-for="item in unclusteredItems" :item-main-data="item" :display-snippet="true"></item-main>
                   <item-pagination :pagination-settings="paginationSettings"></item-pagination>
@@ -210,9 +207,10 @@
         if (this.algorithmFiltering) {
           fetchDataFromApi.clusters(mergedParams, this.queryString)
           .then((response) => {
-            this.clusters = response.data.clusters.filter(function (cluster) {
-              return cluster.labels[0].split(' ').length > 1 // Just for testing - filter out clusters with one word labels
-            })
+            this.clusters = response.data.clusters
+            // this.clusters = response.data.clusters.filter(function (cluster) {
+            //   return cluster.labels[0].split(' ').length > 1 // Just for testing - filter out clusters with one word labels
+            // })
             this.filteredClusters = this.clusters
             this.labels = this.getLabelsFromClusters(this.clusters)
             this.loading = false
@@ -255,9 +253,10 @@
         })
       },
       getLabelsFromClusters: (clusters) => {
-        return [].concat.apply([], clusters.map((cluster) => {
+        let labelArray = [].concat.apply([], clusters.map((cluster) => {
           return cluster.labels
         }))
+        return labelArray[0] ? labelArray : []
       },
       showClusterForLabel (label, wasClicked) {
         if (wasClicked) {

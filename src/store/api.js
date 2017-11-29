@@ -21,6 +21,7 @@ let fetchDataFromApi = {
     })
   },
   atom: function (routeParams, startValue, query) {
+    delete routeParams.lingo
     let newParams = Object.assign(routeParams, { source_type: 'national', start: 0, rows: 100, caller: 'news_clusters', q: query }) // This is hardcoded for now, but later will be user-defined
     function makeParams (params) {
       let filteredParams = {}
