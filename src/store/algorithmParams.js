@@ -1,6 +1,57 @@
 import { localStore } from '../main.js'
 
+  // $shingle_size = params[:shingle_size] ? params[:shingle_size].to_i : 3
+  // $hash_functions = params[:hashes] ? params[:hashes].to_i : 200
+  // $num_rows = params[:rows] ? params[:rows].to_i : 3
+  // $min_cluster_size = params[:cluster_size] ? params[:cluster_size].to_i : 3
+
 const params = {
+  'lsh': [
+    {
+      id: 'shingle_size',
+      label: 'Tamanho dos shingles',
+      description: 'Por quantas palavras devem ser constituídos os shingles usado para comparação',
+      defaultValue: 3,
+      storedValue: 3,
+      minValue: 2,
+      maxValue: 10,
+      step: 1,
+      type: 'integer'
+    },
+    {
+      id: 'hash_functions',
+      label: 'Funções hash',
+      description: 'Número de funções hash',
+      defaultValue: 200,
+      storedValue: 200,
+      minValue: 10,
+      maxValue: 500,
+      step: 1,
+      type: 'integer'
+    },
+    {
+      id: 'num_rows',
+      label: 'Números de shingles para comparar',
+      description: 'Quantos shingles usar para comparações entre artigos',
+      defaultValue: 3,
+      storedValue: 3,
+      minValue: 2,
+      maxValue: 500,
+      step: 1,
+      type: 'integer'
+    },
+    {
+      id: 'min_cluster_size',
+      label: 'Números mínimo de artigos por cluster',
+      description: 'O número mínimo de artigos por cluster',
+      defaultValue: 3,
+      storedValue: 3,
+      minValue: 2,
+      maxValue: 20,
+      step: 1,
+      type: 'integer'
+    }
+  ],
   'lingo': [
     {
       id: 'desiredClusterCountBase',
