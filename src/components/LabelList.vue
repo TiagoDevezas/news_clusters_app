@@ -1,7 +1,7 @@
 <template>
   <div class="column col-3 col-sm-12">
     <ul class="menu" v-if="labels.length">
-      <li class="menu-item"><strong>Tópicos</strong></li>
+      <li class="menu-item"><strong>{{ $t('topics.header') }}</strong></li>
       <li class="divider"></li>
       <li class="menu-item" v-for="label in labels">
         <a href="#" @click.prevent="filterClusters(label)" :class="[ selectedLabel === label && labelClicked ? 'active' : '' ]">{{ label }}</a>

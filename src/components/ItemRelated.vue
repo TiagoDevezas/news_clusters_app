@@ -1,6 +1,6 @@
 <template>
   <div class="item-related">
-    <span>Mais: </span>
+    <span>{{ $t('items.more') }} </span>
     <div class="popover popover-top"  v-for="(item, index) in itemRelatedData">
       <a :href="item.url" :title="item.title">{{ item.source_name }}</a>{{ index < (itemRelatedData.length - 1) ? ',&nbsp;' : '' }}
       

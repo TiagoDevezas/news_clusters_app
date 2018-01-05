@@ -2,7 +2,7 @@
   <div>  
     <ul class="tab">
       <li :class="[{ active: tabIndex === activeIndex }, 'tab-item']" v-for="(tab, tabIndex) in tabs">
-          <a :href="tab.href" @click.prevent="setActive(tabIndex)" ref="tabIndex">{{ tab.tabLabel }}</a>
+          <a :href="tab.href" @click.prevent="setActive(tabIndex)" ref="tabIndex">{{ $t(tab.tabLabel) }}</a>
       </li>
     </ul>
     <div>

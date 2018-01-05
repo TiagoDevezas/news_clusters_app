@@ -2,21 +2,21 @@
   <div class="container-main">
     <div class="clusters">
       <div class="container grid-980">
-        <div class="loading-overlay" v-show="loading">A criar página...</div>
+        <div class="loading-overlay" v-show="loading">{{ $t('loading.message') }}</div>
         <div class="columns">
           <label-list :labels="labels" v-show="!loading"></label-list>
           <div class="column col-7 col-sm-12">
             <tabs-container v-show="!loading">
-              <tab-item tab-label="Notícias" href="#">
+              <tab-item tab-label="tabs.news" href="#">
                 <h6>
-                  As <span v-if="algorithmFiltering">principais</span> notícias de <date-picker></date-picker> 
+                  {{ $t('algorithmInfo.the') }} <span v-if="algorithmFiltering">{{ $t('algorithmInfo.top') }}</span> {{ $t('algorithmInfo.news') }} <date-picker></date-picker> 
                   <span v-if="algorithmFiltering">*</span>
                 </h6>
-                <p class="indication-algorithm" v-if="algorithmFiltering">* segundo um <a href="#" @click.prevent="showInfo"><strong>algoritmo</strong></a></p>
+                <p class="indication-algorithm" v-if="algorithmFiltering">{{ $t('algorithmInfo.according') }} <a href="#" @click.prevent="showInfo"><strong>{{ $t('algorithmInfo.algo') }}</strong></a></p>
                 <dropdown-sorter :item-labels="dropdownLabels" v-show="!loading" v-if="algorithmFiltering"></dropdown-sorter>
                 <item-cluster v-for="(cluster, index) in filteredClusters" :items="cluster.items" :cluster-label="labels[index]" v-show="!loading" v-if="algorithmFiltering"></item-cluster>
                 <div v-if="!clustersExist && algorithmFiltering">
-                  Neste momento não foi possível gerar os grupos de notícias. Provavelmente ainda não foram recolhidas notícias suficientes. Por favor tente mais logo ou escolha outro dia.
+                  {{ $t('loading.error') }}
                 </div>
                 <div class="unclustered-items" v-if="!algorithmFiltering">
                   <search-form></search-form>
@@ -27,10 +27,10 @@
                   <item-pagination :pagination-settings="paginationSettings"></item-pagination>
                 </div>
               </tab-item>
-              <tab-item tab-label="Definições" href="#">
+              <tab-item tab-label="tabs.settings" href="#">
                 <edit-settings :source-list="sources" :algorithm-params="algorithmParams"></edit-settings>
               </tab-item>
-              <tab-item tab-label="Informação" href="#">
+              <tab-item tab-label="tabs.info" href="#">
                 <algorithm-information></algorithm-information>
               </tab-item>
             </tabs-container>       
@@ -87,10 +87,10 @@
         algorithmParams: [],
         loading: true,
         dropdownLabels: [
-          { label: 'Pontuação: mais alta', sort: ['score', 'desc'] },
-          { label: 'Pontuação: mais baixa', sort: ['score', 'asc'] },
-          { label: 'Data: mais recente', sort: ['date', 'desc'] },
-          { label: 'Data: mais antiga', sort: ['date', 'asc'] }
+          { label: this.$i18n.t('dropdown.scoreHigh'), sort: ['score', 'desc'] },
+          { label: this.$i18n.t('dropdown.scoreLow'), sort: ['score', 'asc'] },
+          { label: this.$i18n.t('dropdown.dateHigh'), sort: ['date', 'desc'] },
+          { label: this.$i18n.t('dropdown.dateLow'), sort: ['date', 'asc'] }
         ],
         paginationSettings: {
           start: 0,
