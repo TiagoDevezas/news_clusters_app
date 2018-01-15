@@ -5,6 +5,13 @@ const translations = {
       settings: 'Settings',
       info: 'Information'
     },
+    searchBar: {
+      placeholder: 'Search'
+    },
+    searchResults: {
+      found: ' articles found',
+      notFound: 'No articles found.'
+    },
     settingsOptions: {
       sources: 'Sources',
       algorithm: 'Algorithm',
@@ -28,8 +35,8 @@ const translations = {
       error: "It wasn't possible to generate the news clusters. Probably not enough articles have been collected yet. Please try later or select another day."
     },
     algorithmInfo: {
-      the: '',
-      top: 'Top',
+      the: 'The',
+      top: 'top',
       news: 'news from',
       according: '* according to an',
       algo: 'algorithm'
@@ -79,6 +86,13 @@ const translations = {
       news: 'Notícias',
       settings: 'Definições',
       info: 'Informação'
+    },
+    searchBar: {
+      placeholder: 'Pesquisar'
+    },
+    searchResults: {
+      found: ' artigos encontrados',
+      notFound: 'Nenhum artigo encontrado.'
     },
     settingsOptions: {
       sources: 'Fontes',

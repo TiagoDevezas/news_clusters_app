@@ -1,6 +1,6 @@
 <template>
   <form class="input-group" @submit.prevent="getItems()">
-    <input type="text" placeholder="Pesquisar" class="form-input" v-model="queryText">
+    <input type="text" :placeholder="$t('searchBar.placeholder')" class="form-input" v-model="queryText">
     <button class="btn btn-primary input-group-btn" type="submit">
       <i class="icon icon-search"></i>
     </button>

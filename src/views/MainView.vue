@@ -140,7 +140,7 @@
         return this.clusters.length
       },
       resultsFound () {
-        return this.paginationSettings.numFound > 0 ? this.paginationSettings.numFound + ' artigos encontrados' : 'Nenhum artigo encontrado.'
+        return this.paginationSettings.numFound > 0 ? this.paginationSettings.numFound + this.$i18n.t('searchResults.found') : this.$i18n.t('searchResults.notFound')
       }
     },
 
