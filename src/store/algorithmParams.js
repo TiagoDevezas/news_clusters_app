@@ -1,4 +1,16 @@
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+
+Vue.use(VueI18n)
+
+import translations from '../i18n/translations.js'
+
 import { localStore } from '../main.js'
+
+const i18n = new VueI18n({
+  locale: 'en', // set locale
+  messages: translations // set locale messages
+})
 
   // $shingle_size = params[:shingle_size] ? params[:shingle_size].to_i : 3
   // $hash_functions = params[:hashes] ? params[:hashes].to_i : 200
@@ -55,8 +67,8 @@ const params = {
   'lingo': [
     {
       id: 'desiredClusterCountBase',
-      label: 'Nº base de clusters',
-      description: 'Factor base usado para calcular o número de clusters.',
+      label: i18n.t('algorithmParams.lingo.clusterCountBase.label'),
+      description: i18n.t('algorithmParams.lingo.clusterCountBase.description'),
       defaultValue: 5,
       storedValue: 5,
       minValue: 2,
@@ -66,8 +78,8 @@ const params = {
     },
     {
       id: 'minClusterSize',
-      label: 'Nº mínimo de artigos por cluster',
-      description: 'Determina o número mínimo de artigos por cluster.',
+      label: i18n.t('algorithmParams.lingo.minClusterSize.label'),
+      description: i18n.t('algorithmParams.lingo.minClusterSize.description'),
       defaultValue: 2,
       storedValue: 2,
       minValue: 1,
@@ -88,8 +100,8 @@ const params = {
     // },
     {
       id: 'maxWordDf',
-      label: 'Frequência máxima das palavras nos documentos',
-      description: 'Palavras que apareçam em mais do que o valor percentual deste atributo serão ignoradas. Um valor de 1.0 significa que todas as palavras serão levadas em conta, independentemente do número de documentos em que apareçam.',
+      label: i18n.t('algorithmParams.lingo.maxWordDf.label'),
+      description: i18n.t('algorithmParams.lingo.maxWordDf.description'),
       defaultValue: 0.01,
       storedValue: 0.01,
       minValue: 0.01,
@@ -99,8 +111,8 @@ const params = {
     },
     {
       id: 'PhraseExtractor.dfThreshold',
-      label: 'Frequência limite das frases nos documentos',
-      description: 'Frases que apareçam em menos documentos do que o valor deste atributo serão ignoradas.',
+      label: i18n.t('algorithmParams.lingo.phraseDf.label'),
+      description: i18n.t('algorithmParams.lingo.phraseDf.description'),
       defaultValue: 1,
       storedValue: 1,
       minValue: 1,
@@ -110,8 +122,8 @@ const params = {
     },
     {
       id: 'CaseNormalizer.dfThreshold',
-      label: 'Frequência limite das palavras nos documentos',
-      description: 'Palavras que apareçam em menos documentos do que o valor deste atributo serão ignoradas.',
+      label: i18n.t('algorithmParams.lingo.wordDf.label'),
+      description: i18n.t('algorithmParams.lingo.wordDf.description'),
       defaultValue: 1,
       storedValue: 1,
       minValue: 1,

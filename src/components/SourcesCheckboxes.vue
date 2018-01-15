@@ -3,10 +3,10 @@
     <div class="columns">
       <div class="toggle-buttons col-12">
         <!-- <button class="btn btn-sm" @click="toggleAllSources()">Todas</button> -->
-        <button class="btn btn-sm" @click="toggleOtherSources('sportsSources')">Desporto</button>
-        <button class="btn btn-sm" @click="toggleGeneralSources()">Generalistas</button>
-        <button class="btn btn-sm" @click="toggleOtherSources('pressSources')">Imprensa</button>
-        <button class="btn btn-sm" @click="toggleOtherSources('broadcastSources')">TV/Rádio</button>
+        <button class="btn btn-sm" @click="toggleOtherSources('sportsSources')">{{ $t('settingsOptions.sourceTypeFilter.sport') }}</button>
+        <button class="btn btn-sm" @click="toggleGeneralSources()">{{ $t('settingsOptions.sourceTypeFilter.general') }}</button>
+        <button class="btn btn-sm" @click="toggleOtherSources('pressSources')">{{ $t('settingsOptions.sourceTypeFilter.press') }}</button>
+        <button class="btn btn-sm" @click="toggleOtherSources('broadcastSources')">{{ $t('settingsOptions.sourceTypeFilter.broadcast') }}</button>
       </div>
       <div class="form-group col-6" v-for="source in sourceList">
         <label class="form-switch">

@@ -4,10 +4,10 @@
       <div class="side-nav column col-3">
         <ul class="nav">
           <li class="nav-item" :class="{ active: currentView === 'sources'}">
-            <a href="#" @click.prevent="currentView='sources'">Fontes</a>
+            <a href="#" @click.prevent="currentView='sources'">{{ $t('settingsOptions.sources') }}</a>
           </li>
           <li class="nav-item" :class="{ active: currentView === 'algorithm'}">
-            <a href="#" @click.prevent="currentView='algorithm'">Algoritmo</a>
+            <a href="#" @click.prevent="currentView='algorithm'">{{ $t('settingsOptions.algorithm') }}</a>
           </li>
         </ul>
       </div>
@@ -18,8 +18,8 @@
     </div>
     <div class="settings-submit">
       <div>
-        <button class="btn btn-primary" @click="updateSettings">Guardar</button>
-        <button class="btn btn-link" @click="cancelSettings">Cancelar</button>
+        <button class="btn btn-primary" @click="updateSettings">{{ $t('settingsOptions.button.save') }}</button>
+        <button class="btn btn-link" @click="cancelSettings">{{ $t('settingsOptions.button.cancel') }}</button>
       </div>
     </div>
   </div>

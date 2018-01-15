@@ -42,7 +42,7 @@
       return {
         infoIcon,
         algorithmIsOn: true,
-        switchLabel: 'Ligado'
+        switchLabel: this.$i18n.t('switchLabels.on')
       }
     },
 
@@ -60,11 +60,11 @@
       switchAlgorithm (val) {
         eventBus.$emit('algorithmSwitched', val)
         if (!val) {
-          this.switchLabel = 'Desligado'
+          this.switchLabel = this.$i18n.t('switchLabels.off')
           this.algorithmIsOn = false
           // eventBus.$emit('algorithmIsOff')
         } else {
-          this.switchLabel = 'Ligado'
+          this.switchLabel = this.$i18n.t('switchLabels.on')
           this.algorithmIsOn = true
           // eventBus.$emit('algorithmIsOn')
         }
