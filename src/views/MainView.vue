@@ -28,7 +28,7 @@
                 </div>
               </tab-item>
               <tab-item tab-label="tabs.settings" href="#">
-                <edit-settings :source-list="sources" :algorithm-params="algorithmParams"></edit-settings>
+                <edit-settings :source-list="sources" :algorithm-params="algorithmParams" :selected-algorithm="selectedAlgorithm"></edit-settings>
               </tab-item>
               <tab-item tab-label="tabs.info" href="#">
                 <algorithm-information></algorithm-information>
@@ -54,7 +54,7 @@
   import DatePicker from '../components/DatePicker'
   import LabelList from '../components/LabelList'
   import DropdownSorter from '../components/DropdownSorter'
-  import DropdownSlider from '../components/DropdownSlider'
+  // import DropdownSlider from '../components/DropdownSlider'
   import TabsContainer from '../components/TabsContainer'
   import TabItem from '../components/TabItem'
   import EditSettings from '../components/EditSettings'
@@ -70,7 +70,7 @@
       DatePicker,
       LabelList,
       DropdownSorter,
-      DropdownSlider,
+      // DropdownSlider,
       TabsContainer,
       TabItem,
       EditSettings,
@@ -85,6 +85,7 @@
         labels: [],
         sources: [],
         algorithmParams: [],
+        selectedAlgorithm: '',
         loading: true,
         dropdownLabels: [
           { label: this.$i18n.t('dropdown.scoreHigh'), sort: ['score', 'desc'] },
@@ -107,6 +108,8 @@
 
     mounted () {
       this.setPageTitle(this.defaultTitleTagText)
+      this.selectedAlgorithm = this.checkSelectedAlgorithm()
+      this.algorithmParams = getAlgorithParams(this.selectedAlgorithm)
       this.fetchData()
       eventBus.$on('labelClicked', (label, wasClicked) => {
         this.showClusterForLabel(label, wasClicked)
@@ -126,9 +129,11 @@
         this.paginationSettings.start = 0
         this.fetchData()
       })
-      // eventBus.$on('algorithmSwitched', (val) => {
-      //   this.algorithmFiltering = val
-      // })
+      eventBus.$on('algorithmChanged', val => {
+        this.selectedAlgorithm = val
+        this.algorithmParams = getAlgorithParams(this.selectedAlgorithm)
+        // console.log(JSON.stringify(this.algorithmParams))
+      })
     },
 
     watch: {
@@ -172,10 +177,13 @@
         this.loading = true
         this.sources = getSourcesByType('national')
         this.algorithmFiltering = this.checkIfFilteringIsOn()
-        this.algorithmParams = getAlgorithParams('lingo')
+        // this.selectedAlgorithm = this.checkSelectedAlgorithm()
+        // this.algorithmParams = []
+        // this.algorithmParams = getAlgorithParams(this.selectedAlgorithm)
         let queryParams = this.$route.query
         /* Extract to function */
-        let algoParams = { lingo: this.algorithmParams }
+        let algoParams = {}
+        algoParams[this.selectedAlgorithm] = this.algorithmParams
         let sourcesToShow = this.sources.filter((source) => {
           return source.selected
         }).map((source) => {
@@ -187,7 +195,7 @@
           return source.name
         })
         let sourcesToFetch = { sourcesToShow: sourcesToShow, sourcesToHide: sourcesToHide }
-        let mergedParams = Object.assign(queryParams, sourcesToFetch, algoParams)
+        let mergedParams = Object.assign(queryParams, sourcesToFetch, algoParams, { algorithm: this.selectedAlgorithm })
 
         if (queryParams.day) {
           let title = 'Notícias de ' + queryParams.day + ' - ' + this.defaultTitleTagText
@@ -272,6 +280,12 @@
           return localStore.get('algoFilter').isOn
         }
         return true
+      },
+      checkSelectedAlgorithm () {
+        if (localStore.get('selectedAlgorithm') === undefined) {
+          localStore.set('selectedAlgorithm', 'lingo')
+        }
+        return localStore.get('selectedAlgorithm')
       }
     }
 

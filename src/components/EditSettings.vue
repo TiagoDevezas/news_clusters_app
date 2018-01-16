@@ -13,7 +13,7 @@
       </div>
       <div class="settings-content column col-9">
         <sources-checkboxes v-show="currentView === 'sources'" :source-list="sourceList"></sources-checkboxes>
-        <algorithm-params v-show="currentView === 'algorithm'" :params="algorithmParams"></algorithm-params>
+        <algorithm-params v-show="currentView === 'algorithm'" :params="algorithmParams" :selected-algorithm="selectedAlgorithm"></algorithm-params>
       </div>
     </div>
     <div class="settings-submit">
@@ -37,6 +37,9 @@
       },
       algorithmParams: {
         type: Array
+      },
+      selectedAlgorithm: {
+        type: String
       }
     },
     components: {
@@ -61,9 +64,12 @@
         this.currentView = viewName
       },
       updateSettings () {
+        let params = {}
+        let paramsKey = localStore.get('selectedAlgorithm')
+        params[paramsKey] = this.algorithmParams
         localStore.set('algoFilter', { isOn: this.algorithmIsOn })
         localStore.set('sources', { sources: this.sourcesSet })
-        localStore.set('params', { lingoParams: this.algorithmParams })
+        localStore.assign('params', params)
         eventBus.$emit('settingsChanged', 0)
         eventBus.$emit('fetchNewData')
       },

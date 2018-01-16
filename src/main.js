@@ -12,7 +12,11 @@ import 'spectre.css/dist/spectre-exp.min.css'
 import 'spectre.css/dist/spectre-icons.min.css'
 import 'vue-flatpickr/theme/airbnb.css'
 
+import operationsPlugin from 'store/plugins/operations'
+
 import store from 'store'
+
+store.addPlugin(operationsPlugin)
 
 export const eventBus = new Vue()
 export const localStore = store

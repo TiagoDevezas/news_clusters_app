@@ -135,10 +135,8 @@ const params = {
 }
 
 export default function getAlgorithParams (algoName) {
-  if (localStore.get('params') !== undefined) {
-    if (localStore.get('params').lingoParams && localStore.get('params').lingoParams.length) {
-      return localStore.get('params').lingoParams
-    }
+  if (!localStore.get('params')) {
+    localStore.set('params', {lingo: params['lingo'], lsh: params['lsh']})
   }
-  return params[algoName]
+  return localStore.get('params')[algoName]
 }

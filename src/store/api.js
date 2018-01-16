@@ -8,6 +8,7 @@ const atomApiUrl = isProduction ? 'http://irlab.fe.up.pt/p/mediaviz/api/atom' : 
 
 let fetchDataFromApi = {
   clusters: function (routeParams, query) {
+    console.log(routeParams)
     let newParams = Object.assign(routeParams, { q: query })
     return axios.get(clustersApiUrl, {
       params: newParams
@@ -15,6 +16,7 @@ let fetchDataFromApi = {
   },
   items: function (routeParams, startValue, query) {
     delete routeParams.lingo // Delete lingo params
+    delete routeParams.lsh // Delete lingo params
     let newParams = Object.assign(routeParams, { source_type: 'national', start: startValue, rows: 20, caller: 'news_clusters', q: query }) // This is hardcoded for now, but later will be user-defined
     return axios.get(itemsApiUrl, {
       params: newParams

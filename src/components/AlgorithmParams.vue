@@ -6,6 +6,7 @@
           <input type="checkbox" v-model="algorithmIsOn" />
           <i class="form-icon"></i> {{ switchLabel }}
         </label>
+        <algorithm-selector :item-labels="algorithmsAvailable" v-if="algorithmIsOn" :selected-algorithm="selectedAlgorithm"></algorithm-selector>
         <div class="form-group" v-for="p in params" v-show="algorithmIsOn">
           <div class="icon-label">          
             <div class="popover popover-top">          
@@ -30,11 +31,19 @@
 <script>
   import { localStore, eventBus } from '../main.js'
   import infoIcon from '../assets/info.svg'
+  import AlgorithmSelector from '../components/AlgorithmSelector'
 
   export default {
+    components: {
+      AlgorithmSelector
+    },
+
     props: {
       params: {
         type: Array
+      },
+      selectedAlgorithm: {
+        type: String
       }
     },
 
@@ -42,6 +51,7 @@
       return {
         infoIcon,
         algorithmIsOn: true,
+        algorithmsAvailable: [{ label: 'lingo' }, { label: 'lsh' }],
         switchLabel: this.$i18n.t('switchLabels.on')
       }
     },
