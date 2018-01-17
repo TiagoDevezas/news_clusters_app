@@ -21,8 +21,8 @@ const params = {
   'lsh': [
     {
       id: 'shingle_size',
-      label: 'Tamanho dos shingles',
-      description: 'Por quantas palavras devem ser constituídos os shingles usado para comparação',
+      label: i18n.t('algorithmParams.lsh.shingleSize.label'),
+      description: i18n.t('algorithmParams.lsh.shingleSize.description'),
       defaultValue: 3,
       storedValue: 3,
       minValue: 2,
@@ -32,8 +32,8 @@ const params = {
     },
     {
       id: 'hash_functions',
-      label: 'Funções hash',
-      description: 'Número de funções hash',
+      label: i18n.t('algorithmParams.lsh.hashFunctions.label'),
+      description: i18n.t('algorithmParams.lsh.hashFunctions.description'),
       defaultValue: 200,
       storedValue: 200,
       minValue: 10,
@@ -43,8 +43,8 @@ const params = {
     },
     {
       id: 'num_rows',
-      label: 'Números de shingles para comparar',
-      description: 'Quantos shingles usar para comparações entre artigos',
+      label: i18n.t('algorithmParams.lsh.numRows.label'),
+      description: i18n.t('algorithmParams.lsh.numRows.description'),
       defaultValue: 3,
       storedValue: 3,
       minValue: 2,
@@ -54,8 +54,8 @@ const params = {
     },
     {
       id: 'min_cluster_size',
-      label: 'Números mínimo de artigos por cluster',
-      description: 'O número mínimo de artigos por cluster',
+      label: i18n.t('algorithmParams.lsh.minClusterSize.label'),
+      description: i18n.t('algorithmParams.lsh.minClusterSize.label'),
       defaultValue: 3,
       storedValue: 3,
       minValue: 2,
